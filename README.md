@@ -36,10 +36,33 @@ Sistema móvil completo para gestión de restobar con inteligencia artificial, I
 - **Git**
 - **Expo CLI** (se instala automáticamente)
 
+## 🛠️ Instalación
 
-#### npm install
+### 1. Clonar el Repositorio
+```bash
+git clone [URL_DE_TU_REPOSITORIO]
+cd restobar-ai-app
 ```
 
+### 2. Instalar Dependencias
+```bash
+npm install
+```
+
+### 3. Configurar Base de Datos
+
+#### Credenciales Supabase (ya configuradas):
+```env
+SUPABASE_URL=https://ymwpsjlwwvsbockcyvbt.supabase.co
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+#### Ejecutar Script de Base de Datos:
+1. Ve a [Supabase Dashboard](https://supabase.com/dashboard)
+2. Abre el **SQL Editor**
+3. Ejecuta el script `database_schema.sql` (incluido en el proyecto)
+
+### 4. Ejecutar la Aplicación
 
 #### Para Web (Recomendado para desarrollo):
 ```bash
@@ -104,8 +127,116 @@ restobar-ai-app/
 └── README.md             # Esta documentación
 ```
 
+## 🗄️ Base de Datos
 
+### Tablas Principales
 
+#### usuarios
+- Gestión de usuarios y roles
+- Autenticación y permisos
+
+#### productos
+- Catálogo de productos del restobar
+- Precios, categorías y stock
+
+#### ventas & detalle_ventas
+- Registro de todas las transacciones
+- Análisis de ventas por período
+
+#### sensor_lecturas
+- Datos de sensores IoT en tiempo real
+- Historial de temperatura, humedad
+
+#### reconocimientos_ia
+- Log de reconocimientos de la IA
+- Feedback y precisión del modelo
+
+#### configuracion
+- Parámetros del sistema
+- Alertas y límites de sensores
+
+## 🎨 Personalización
+
+### Cambiar Productos Reconocibles
+Edita el array `restobarItems` en `src/screens/CameraScreen.tsx`:
+
+```typescript
+const restobarItems = {
+  nuevo_producto: {
+    name: '🥤 Nuevo Producto',
+    price: 'S/ XX.XX',
+    category: 'Categoria',
+    description: 'Descripción del producto',
+    stock: XX,
+    image: '🥤'
+  }
+};
+```
+
+### Configurar Nuevos Sensores
+Agrega sensores en `src/screens/IoTScreen.tsx`:
+
+```typescript
+const [sensors, setSensors] = useState([
+  {
+    id: 'ESP32_004',
+    name: 'Nueva Ubicación',
+    temperature: 20.0,
+    humidity: 60,
+    connected: true,
+    // ...
+  }
+]);
+```
+
+### Modificar Colores del Tema
+Los colores principales están en los styles:
+- **Primario:** `#ff6b35` (Naranja)
+- **Éxito:** `#4caf50` (Verde)
+- **Error:** `#f44336` (Rojo)
+- **Fondo:** `#1a1a1a` (Negro)
+
+## 🚨 Solución de Problemas
+
+### Error: "Metro bundler no inicia"
+```bash
+npx expo start --clear
+```
+
+### Error: "Dependencias no encontradas"
+```bash
+rm -rf node_modules
+npm install
+```
+
+### Error: "Puerto ocupado"
+```bash
+# El sistema automáticamente sugerirá un puerto alternativo
+# Acepta con 'Y' cuando aparezca el mensaje
+```
+
+### Error: "Base de datos no conecta"
+1. Verifica las credenciales en Supabase
+2. Ejecuta el script SQL completo
+3. Revisa los permisos de las tablas
+
+## 📱 Deployment
+
+### Para Web
+```bash
+npx expo build:web
+# Los archivos se generan en /web-build
+```
+
+### Para Play Store/App Store
+```bash
+# Instalar EAS CLI
+npm install -g @expo/eas-cli
+
+# Configurar build
+eas build --platform android
+eas build --platform ios
+```
 
 ## 🧪 Testing
 
